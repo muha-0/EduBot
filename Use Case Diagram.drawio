@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15" version="24.8.3">
+  <diagram name="Page-1" id="-LBzXL00JmI0Y5y8ndYP">
+    <mxGraphModel dx="954" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-8" value="" style="rounded=0;whiteSpace=wrap;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;locked=1;connectable=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="110" width="520" height="570" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-20" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-1" target="i-kBjSVL9VnwyarJLOLy-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-21" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-1" target="i-kBjSVL9VnwyarJLOLy-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-22" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-1" target="i-kBjSVL9VnwyarJLOLy-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-23" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-1" target="i-kBjSVL9VnwyarJLOLy-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-26" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-1" target="i-kBjSVL9VnwyarJLOLy-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-1" value="Student" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="60" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-27" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-5" target="i-kBjSVL9VnwyarJLOLy-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-5" value="Academic Advisor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="750" y="180" width="60" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-24" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-6" target="i-kBjSVL9VnwyarJLOLy-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-25" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-6" target="i-kBjSVL9VnwyarJLOLy-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-6" value="Professor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="750" y="450" width="60" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-9" value="Storing students information" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="120" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-10" value="Displaying class statistics/reviews" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="390" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-11" value="Writing/Reporting/Solving assistance" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="480" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-12" value="Recommending tools/techniques/tips" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="390" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-13" value="Updating student information" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="210" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-30" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-14" target="i-kBjSVL9VnwyarJLOLy-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-31" value="Includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="i-kBjSVL9VnwyarJLOLy-30">
+          <mxGeometry x="-0.0605" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-14" value="Fine-Tuning LLM on new data" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="500" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-15" value="Predicting exam/test scores" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="300" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-16" value="Displaying students information" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="210" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-28" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="i-kBjSVL9VnwyarJLOLy-17" target="i-kBjSVL9VnwyarJLOLy-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-29" value="Includes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="i-kBjSVL9VnwyarJLOLy-28">
+          <mxGeometry x="-0.0983" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-17" value="&lt;div&gt;Retraining/optimizing Machine Learning model&lt;/div&gt;&lt;div&gt;on new data&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="585" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i-kBjSVL9VnwyarJLOLy-18" value="Updating training data labels" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="600" width="160" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
