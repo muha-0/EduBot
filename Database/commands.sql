@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS Job(job_id INTEGER PRIMARY KEY, jname CHAR(10), domain CHAR(10));
+CREATE TABLE IF NOT EXISTS Employee(emp_id INTEGER, ename CHAR(10), job_id INTEGER, FOREIGN KEY (job_id) REFERENCES Job(job_id));
+INSERT INTO Job VALUES(1, 'Engineer', 'Data');
+INSERT INTO Employee VALUES(1, 'John', 1);
+INSERT INTO Employee VALUES(2, 'CHICKEN', 1);
