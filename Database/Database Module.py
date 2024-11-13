@@ -69,4 +69,4 @@ def query(db, SQLquery):
 # print(cursor.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall())
 # # to get what tables are in the database at the moment
 
-# print(query(db = db, SQLquery = "SELECT * FROM Employee e JOIN Job j ON e.job_id = j.job_id"))
+print(query(db = db, SQLquery = "SELECT * FROM Employee e JOIN Job j ON e.job_id = j.job_id"))
