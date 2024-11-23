@@ -8,4 +8,5 @@ class Controller:
 
     @staticmethod
     def generate(message):
-        return Controller.llm.generate(message)
+        # return Controller.llm.generate(message)
+        return message
