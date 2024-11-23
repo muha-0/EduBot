@@ -7,8 +7,10 @@ from imblearn.over_sampling import RandomOverSampler
 
 
 class MlModel:
-    """**Machine Learning model used for score prediction**
-    
+    """
+
+    **Machine Learning model used for score prediction**
+
     """
 
     def __init__(self) -> None:

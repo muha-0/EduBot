@@ -85,8 +85,7 @@ const ChatMessage = ({message, isAI = false}) => {
 
     return (
         <div style={messageStyles}>
-            {<TextWithLinks text={message}/>}
-            {/*<img src={test} width={300} />*/}
+            {message && <TextWithLinks text={message}/>}
         </div>
     );
 };

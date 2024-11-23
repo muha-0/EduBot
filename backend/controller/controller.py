@@ -7,8 +7,8 @@ class Controller:
     __DB_client = DBClient()
 
     @staticmethod
-    def generate(message):
-        return Controller.__llm.context_analysis(message)
+    def generate(message, result_queue):
+        result_queue.put(Controller.__llm.context_analysis(message))
 
 
 if __name__ == "__main__":

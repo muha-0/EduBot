@@ -21,6 +21,7 @@ class ChatModel:
     """
 
     def __init__(self) -> None:
+        print("New Instance")
         self.history = []
         self.user = User()
         self.mlmodel = MlModel()
