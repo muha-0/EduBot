@@ -1,27 +1,30 @@
+import os
+from user import User
+from groq import Groq
 import json
 import re
+from MLM.mlmodel import MlModel
 
-from groq import Groq
 
-from backend.LLM.user import User
-
-"""ChatModel Class Description:
-    This class does the main functionality of
-        1-Communication with the LLM.
-        2-Context Analysis.
-        3-Sentiment Analysis.
-        4-Feature Extraction.
-        5-Saving the chat history and the chat context.
-        6-All in-code prompts are featured here.
-    
-    It uses a user object to store the user's attributes
-"""
 
 
 class ChatModel:
+    """**ChatModel Class Description:**  
+    *This class does the main functionality of:*  
+        1-Communication with the LLM.  
+        2-Context Analysis.  
+        3-Sentiment Analysis.  
+        4-Feature Extraction.  
+        5-Saving the chat history and the chat context.  
+        6-All in-code prompts are featured here.  
+    
+    It uses a user object to store the user's attributes and an MlModel object to get score predictions
+    """
+    
     def __init__(self) -> None:
         self.history = []
         self.user = User()
+        self.mlmodel = MlModel()
         self.client = Groq(
             api_key="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",
         )
@@ -30,7 +33,19 @@ class ChatModel:
         # This flag should be used only when the user input is directed for extraction.
         self.wanted_prediction = False
     
+    
     def context_analysis(self, user_input):
+        """Given user input, it decides the best course of action given the context and return the appropriate response
+        
+        1-It calls the extraction function to extract any relevant information if the response is recommendation (I found it to give wrong information if the request is prediction)
+        2-Ask the LLM to decide the Context/Intent of the user's input
+        If Recommendation, respond directly
+        If Prediction, call for validation and then respond
+        If Extraction, call for extraction and then check the state for the next step
+        
+        
+        """
+        
         # We will make the context analysis message stand alone for the LLM without giving giving him the chat history
         
         # Append the user's message to the chat history to keep the LLM in context 
@@ -41,7 +56,7 @@ class ChatModel:
         
         
         messege = f"""Given the following text, say "prediction" if the user wants to get a prediction, 
-        say "extraction" if the user is providing information about themself, say "recommendation" for any other context: \n
+        say "extraction" if the user is providing information or a self report about themself, say "recommendation" for any other context: \n
         \"{user_input}\""""
         
         chat_completion = self.client.chat.completions.create(
@@ -75,6 +90,16 @@ class ChatModel:
         
         # Not a prediction request
         if response == 'recommendation':
+            # Retreive a JSON Object containing all extracted relevant information
+            user_info = self.extract(user_input = user_input)
+            
+            # Update the extracted information into the user object's attributes
+            try:
+                self.user.update(**user_info)
+                
+            except Exception as e:
+                print("Execption while inputing extracted data during a recommendation: ", e)
+            
             # Save the LLM's response to the actual user input while giving him context using chat history
             chat_completion = self.client.chat.completions.create(
             messages= self.history,
@@ -98,15 +123,20 @@ class ChatModel:
         if response == 'prediction':
             return self.validate_and_output()
         
-        
         # It is an extraction request
         if response == 'extraction':
-            # Retreive a JSON Object containing all extracted files
+            # Retreive a JSON Object containing all extracted information
             user_info = self.extract(user_input = user_input)
             
             # Update the extracted information into the user object's attributes
-            self.user.update(**user_info)
+            try:
+                self.user.update(**user_info)
+                
+            except Exception as e:
+                print("Execption while inputing extracted data during an extraction: ", e)
             
+            #Test
+            print("User Current Attributes and values:\n", self.user.__dict__, "\n")
             
             # Check if the there was an initial prediction request to process
             if self.wanted_prediction == True:
@@ -155,13 +185,13 @@ class ChatModel:
         
         for attribute, value in self.user.__dict__.items():  # or obj.__dict__.items()
             # If the attribute is missing add it to the missing list
-            if value == None:
+            if value == None or value == "" or value == []:
                 missing_attributes.append(attribute)
             print(f"{attribute}: {value}\n", "\n\n")
         
         # We can manage things and make predictions if 0-2 attributes are missing
         # Tell the user we need more info if more than 2 attributes are missing
-        if len(missing_attributes) > 2:
+        if len(missing_attributes) > 4:
             # Turn the wanted prediction flag to true
             # After validation, the user input should make an extraction request which when done,
             # we need to know whether if there was an initial prediction request that led us to this point or otherwise
@@ -195,7 +225,7 @@ class ChatModel:
             return in_context_response
         
         # Now we can provide a prediction
-        prediction = self.predict(**self.user.__dict__) # To-do
+        prediction = self.predict() # To-do
         
         # Wrap up the prediction in a message
         message = f"""
@@ -230,11 +260,36 @@ class ChatModel:
         print("in-context response for announcing predictions:\n", in_context_response, "\n\n")
         print(self.history)
         return in_context_response
+
+        
+    # TODO: double check after fixing the ML model
+    def predict(self):
+        attributes = [
+            self.user.study_hours_per_week,
+            self.user.class_attendance,
+            self.user.resource_access,
+            self.user.extracurricular_activities,
+            self.user.sleep_hours_per_night,
+            self.user.previous_exam_scores,
+            self.user.motivation_level,
+            self.user.teacher_quality,
+            self.user.school_type,
+            self.user.peer_influence,
+            self.user.physical_activity,
+            self.user.learning_disabilities,
+            self.user.distance_from_home
+        ]
         
         
-    # TODO: Related to ML Model
-    def predict(self, **kwargs):
-        pass
+        try:
+            prediction = self.mlmodel.predict(attributes = attributes)
+            return prediction
+        except Exception as e:
+            print("Exception during calling ml model for a prediction: ", e, "\n")
+        
+        # If an error happened, return this message instead
+        return 'could not predict exam score'
+        
         
     def extract(self, user_input):
         
@@ -255,7 +310,13 @@ class ChatModel:
                             "motivation_level": "medium",
                             "class_attendance": 90,
                             "teacher_quality": "high",
-                            "resource_access": "medium"
+                            "resource_access": "medium",
+                            "extracurricular_activities": "yes",
+                            "school_type": "private",
+                            "peer_influence": "neutral",
+                            "learning_disabilities": "no",
+                            "distance_from_home": "far",
+                            "physical_activity": "6"
                         }
         
         # Few-Shot Prompt
@@ -280,13 +341,25 @@ class ChatModel:
                 
                 7. remember to specify the gender.
                 
-                8. Make sure to make a values of "age", "study_hours_per_week", "sleep_hours_per_night", "previous_exam_scores", "class_attendance" as numbers only.
+                8. Make sure to make the values of "age", "study_hours_per_week", "sleep_hours_per_night", "previous_exam_scores", "class_attendance" as numbers only.
                 
                 9. If values of "age" or "sleep_hours_per_night" are zero, leave the value as an empty string.
                 
+                10. Make sure to transform the values of "extracurricular_activities", "learning_disabilities" into (yes, no) categories.
+                
+                11. Make sure to transform the values of "school_type" into (private, public) categories.
+                
+                12. Make sure to transform the values of "peer_influence" into (positive, negative, neutral) categories.
+                
+                13. Make sure to transform the values of "physical_activity" into (0, 1, 2, 3, 4, 5, 6) categories.
+                
+                14. Make sure to transform the values of "distance_from_home" into (near, moderate, far) categories.
+                
+                15. Make sure to stick to the given format and value categories.
+                
                 Here are some examples, I'm gonna provide you the raw_texts and json structure.
                 raw_texts: 
-                1-Hey! I’m Shady, 21, and I usually study around 20 hours a week. Teachers here are supportive, but I’d say my motivation for this course is around 7/10. Attendance’s been pretty good too, about 90%!
+                1-Hey, I’m Shady, 21, male. I go to a private school and study about 20 hours a week. I usually get 6 hours of sleep a night, and my last exam score was 85. My motivation level is medium, and I attend 90% of my classes. Teachers are great, and resource access is decent. I’m involved in extracurricular activities and do about 6 hours of physical activity weekly. The school is far from home, but I manage. Peer influence is neutral, and thankfully, I don’t have any learning disabilities.
                 2-Resources are decent—nothing fancy, but they work. I get about 6 hours of sleep most nights, which isn’t ideal but manageable. My last exam score was 85%.
                 3-Classes are alright! I attend regularly, maybe 85-90%. My study schedule’s flexible, but I squeeze in a few hours daily. Sleep’s hit-or-miss—usually 5-6 hours.
                 4-Hi, I’m Shady, a 21-year-old male. I study around 25 hours weekly, get 6 hours of sleep nightly, and scored 87 in my last exam. Motivation is at 8/10, with decent teacher support and 92% attendance.

@@ -1,3 +1,4 @@
+import json
 class User:
     def __init__(self) -> None:
         self.name = None
@@ -10,6 +11,13 @@ class User:
         self.class_attendance = None
         self.teacher_quality = None
         self.resource_access = None
+        self.extracurricular_activities = None
+        self.school_type = None
+        self.peer_influence = None
+        self.learning_disabilities = None
+        self.distance_from_home = None
+        self.physical_activity = None
+        
 
     def update(self, **kwargs):
         """Update the user's attributes
@@ -18,10 +26,10 @@ class User:
             -Else, we assign the extracted value to its attribute.
         """
         for attribute, value in kwargs.items():
-            if (value != ''):
+            if(value != ''):
                 if attribute.__contains__("name"):
                     self.name = value
-
+                    
                 elif attribute.__contains__("age"):
                     self.age = value
 
@@ -48,6 +56,36 @@ class User:
 
                 elif attribute.__contains__("resource"):
                     self.resource_access = value
+                    
+                elif attribute.__contains__("extracurricular"):
+                    self.extracurricular_activities = value
+
+                elif attribute.__contains__("school"):
+                    self.school_type = value
+
+                elif attribute.__contains__("peer") or attribute.__contains__("influence"):
+                    self.peer_influence = value
+
+                elif attribute.__contains__("learning") or attribute.__contains__("disabilities"):
+                    self.learning_disabilities = value
+
+                elif attribute.__contains__("distance") or attribute.__contains__("home"):
+                    self.distance_from_home = value
+
+                elif attribute.__contains__("physical"):
+                    self.physical_activity = value
+                    
+                    
+                
 
 
+                    
+                
+                
+                
+            
+    
+    
+    
+        
 u = User()
