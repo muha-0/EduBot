@@ -19,15 +19,16 @@ def generate(message, result_queue):
 
     Controller.generate(message, result_queue)
 
+
 @app.post("/generate")
-def receive_data(body: MessageRequestModel):
+def receive_data(payload: MessageRequestModel):
     result_queue = Queue()
-    process = Process(target=generate, args=(body.message, result_queue))
+
+    process = Process(target=generate, args=(payload.message, result_queue))
     process.start()
     process.join()
 
-    result = result_queue.get()
-    return result
+    return result_queue.get()
 
 
 if __name__ == "__main__":
