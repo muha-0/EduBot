@@ -3,7 +3,7 @@ import re
 
 from groq import Groq
 
-from user import User
+from .user import User
 from ..MLM import MlModel
 
 

@@ -26,7 +26,7 @@ const ChatWindow = ({onClose}) => {
 
     async function sendQuery(query: string) {
         const data = {
-            msg: query,
+            message: query,
         }
 
         try {
