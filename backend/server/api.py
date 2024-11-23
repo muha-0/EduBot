@@ -4,8 +4,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.controller import Controller
-
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"]
@@ -16,11 +14,15 @@ class MessageRequestModel(BaseModel):
     message: str
 
 
+def generate(message, result_queue):
+    from backend.controller import Controller
+
+    Controller.generate(message, result_queue)
+
 @app.post("/generate")
 def receive_data(body: MessageRequestModel):
     result_queue = Queue()
-
-    process = Process(target=Controller.generate, args=(body.message, result_queue))
+    process = Process(target=generate, args=(body.message, result_queue))
     process.start()
     process.join()
 
