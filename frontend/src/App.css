@@ -1,0 +1,186 @@
+#video {
+    position: fixed;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+a:link {
+    color: #ddff00;
+}
+
+a:visited {
+    color: #be86dc;
+}
+
+.notification {
+    font-family: Poppins;
+    position: fixed;
+    font-size: 0.9rem;
+    bottom: 70px;
+    right: 40px;
+    background-color: #b37b30;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px; /* Adjust border-radius for tail shape */
+    cursor: pointer;
+    /* Tail styles */
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -10px; /* Adjust for tail length */
+        right: 5px; /* Adjust for tail position */
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 20px 0 0 20px; /* Adjust border width for tail size */
+        border-color: #b37b30 transparent transparent transparent; /* Match notification background color */
+    }
+}
+
+.chat-window {
+    z-index: 1;
+    position: fixed; /* Fix to viewport (adjust positioning) */
+    bottom: 50px; /* Margin from bottom */
+    right: 30px; /* Margin from right */
+    width: 450px; /* Chat window width */
+    height: 600px; /* Chat window height */
+    border-radius: 10px; /* Rounded corners for a softer look */
+    background-color: #f5f5f5; /* Light gray background */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+    display: flex; /* Allow for content layout */
+    flex-direction: column; /* Stack content vertically */
+}
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Optional to hide overflowing content */
+}
+
+.chat-window-head {
+    display: flex;
+    background-color: #0b4e99;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle drop shadow */
+    width: 100%;
+    height: 78px;
+    border-radius: 10px;
+}
+
+.title {
+    position: absolute;
+    color: #fafafa; /* Lighter text color for Material Design */
+    font-weight: bold; /* Emphasize header style */
+    font-size: 1.3rem; /* Adjust font size for header */
+    top: -10px;
+    right: 230px;
+    font-family: Poppins;
+}
+
+.subtitle {
+    position: absolute;
+    color: #fafafa; /* Lighter text color for Material Design */ /* Emphasize header style */
+    font-size: 0.7rem; /* Adjust font size for header */
+    top: 30px;
+    right: 80px;
+    font-family: Poppins;
+}
+
+.close-button {
+    position: absolute;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    top: 10px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin: 10px;
+    border: none;
+    background-color: red; /* Red background color */
+    cursor: pointer;
+    border-radius: 40%;
+    font-weight: bold; /* Make the text bold */
+    color: white; /* White text color for better visibility on red background */
+}
+
+
+.image-frame {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    left: 5px;
+    height: 50px;
+    position: absolute; /* Needed for pseudo-elements */
+    margin: 5px; /* Add some margin for spacing */
+    padding: 5px; /* Create space between image and border */
+    border: 2px solid #ddd; /* Solid border color */
+    border-radius: 50px; /* Rounded corners for the frame */
+    background-color: whitesmoke;
+}
+
+.input-container {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.input-container input {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    background-color: #ffffff;
+    flex-grow: 1;
+    height: 22px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.input-container button {
+    background-color: #0b4e99;
+    height: 40px;
+    width: 100px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+
+.chat-button {
+    z-index: 1;
+    position: fixed; /* Fix the button to the viewport */
+    bottom: 10px; /* Margin from bottom */
+    right: 10px; /* Margin from right */
+    width: 50px; /* Button width */
+    height: 50px; /* Button height */
+    border-radius: 50%; /* Create a circular button */
+    background-color: #0b4e99; /* Button color */
+    color: white; /* Text color */
+    display: flex; /* Allow centering icon */
+    justify-content: center; /* Center icon horizontally */
+    align-items: center; /* Center icon vertically */
+    cursor: pointer; /* Indicate clickable button */
+}
+
+.chat-container {
+    position: absolute;
+    top: 85px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 98%;
+    height: 75%;
+    overflow-y: auto; /* Enable scrolling for long chat history */
+    overflow-x: hidden;
+}

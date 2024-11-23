@@ -1,8 +1,9 @@
-import os
-from LLM.user import User
-from groq import Groq
 import json
 import re
+
+from groq import Groq
+
+from backend.LLM.user import User
 
 """ChatModel Class Description:
     This class does the main functionality of
