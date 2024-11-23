@@ -3,9 +3,13 @@ from ..database import DBClient
 
 
 class Controller:
-    llm = LLM()
-    DB_client = DBClient()
+    __llm = LLM()
+    __DB_client = DBClient()
 
     @staticmethod
     def generate(message):
-        return Controller.llm.context_analysis(message)
+        return Controller.__llm.context_analysis(message)
+
+
+if __name__ == "__main__":
+    x = Controller()
