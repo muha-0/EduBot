@@ -107,7 +107,7 @@ class ChatModel:
 
             # Append the LLM's response to the chat history
             self.history.append({
-                "role": "assistent",
+                "role": "assistant",
                 "content": in_context_response
             })
 
@@ -155,7 +155,7 @@ class ChatModel:
 
                 # Append the LLM's response to the chat history
                 self.history.append({
-                    "role": "assistent",
+                    "role": "assistant",
                     "content": in_context_response
                 })
 
@@ -211,7 +211,7 @@ class ChatModel:
 
             # Append the LLM's response to the chat history
             self.history.append({
-                "role": "assistent",
+                "role": "assistant",
                 "content": in_context_response
             })
 
@@ -248,7 +248,7 @@ class ChatModel:
 
         # Append the LLM's response to the chat history
         self.history.append({
-            "role": "assistent",
+            "role": "assistant",
             "content": in_context_response
         })
 
