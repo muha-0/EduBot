@@ -1,5 +1,5 @@
-from ..Database import DBClient
 from ..LLM import LLM
+from ..database import DBClient
 
 
 class Controller:
@@ -8,5 +8,4 @@ class Controller:
 
     @staticmethod
     def generate(message):
-        # return Controller.llm.generate(message)
-        return message
+        return Controller.llm.context_analysis(message)

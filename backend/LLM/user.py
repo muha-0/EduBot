@@ -1,4 +1,3 @@
-import json
 class User:
     def __init__(self) -> None:
         self.name = None
@@ -17,7 +16,6 @@ class User:
         self.learning_disabilities = None
         self.distance_from_home = None
         self.physical_activity = None
-        
 
     def update(self, **kwargs):
         """Update the user's attributes
@@ -26,10 +24,10 @@ class User:
             -Else, we assign the extracted value to its attribute.
         """
         for attribute, value in kwargs.items():
-            if(value != ''):
+            if (value != ''):
                 if attribute.__contains__("name"):
                     self.name = value
-                    
+
                 elif attribute.__contains__("age"):
                     self.age = value
 
@@ -56,7 +54,7 @@ class User:
 
                 elif attribute.__contains__("resource"):
                     self.resource_access = value
-                    
+
                 elif attribute.__contains__("extracurricular"):
                     self.extracurricular_activities = value
 
@@ -74,18 +72,7 @@ class User:
 
                 elif attribute.__contains__("physical"):
                     self.physical_activity = value
-                    
-                    
-                
 
 
-                    
-                
-                
-                
-            
-    
-    
-    
-        
-u = User()
+if __name__ == "__main__":
+    u = User()
