@@ -67,7 +67,7 @@ const ChatMessage = ({message, isAI = false}) => {
 
     const userStyles = {
         ...baseStyles,
-        backgroundColor: '#0b4e99', // Lighter material background
+        backgroundColor: '#e1b953', // Lighter material background
         alignSelf: 'flex-end',
         justifyContent: 'flex-start', // Text alignment to the left
         marginRight: '16px', // Margin for user messages
@@ -75,7 +75,7 @@ const ChatMessage = ({message, isAI = false}) => {
 
     const botStyles = {
         ...baseStyles,
-        backgroundColor: '#256661', // Slightly darker material background
+        backgroundColor: '#872539', // Slightly darker material background
         alignSelf: 'flex-start',
         justifyContent: 'flex-end', // Text alignment to the right
         marginLeft: '16px', // Margin for bot messages

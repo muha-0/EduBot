@@ -5,10 +5,9 @@ from pydantic import BaseModel
 from backend.controller import Controller
 
 app = FastAPI()
-# Allow CORS for all origins
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"]
-)
+)  # Allow CORS for all origins
 
 
 class MessageRequestModel(BaseModel):

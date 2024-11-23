@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import './App.css';
 import ChatWindow from "./chatContainer";
-import bot from './bot.svg';
-import test from './test.png'
+import bot from './assets/bot.svg';
+import bg from './assets/bg.png'
 import Notification from './notify'
 
 
@@ -12,7 +12,7 @@ function App() {
 
     return (
         <>
-            <img src={test} className="bg"/>
+            <img src={bg} className="bg-image"/>
             {!sessionStorage.getItem("notified") && <Notification onClick={() => {
                 sessionStorage.setItem("notified", "Notified")
                 setNotified(true)

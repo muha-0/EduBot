@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 // @ts-ignore
 import {BeatLoader} from 'react-spinners';
-import CIS from './CIS.png';
+import CIS from './assets/CIS.png';
 import axios from "axios";
 import ChatMessage from "./message";
 
@@ -11,7 +11,7 @@ const ChatWindow = ({onClose}) => {
     const [inputValue, setInputValue] = useState('');
     const [start, setStart] = useState(true)
     const [messages, setMessages] = useState([{
-        message: "I'm The Faculty of Computing and Information Sciences AI Assistant.\nHow Can I help you? 😊",
+        message: "I'm The Educational AI Assistant.\nHow Can I help you? 😊",
         isAI: true
     }]);
     const [isLoading, setLoading] = useState(false);
@@ -69,8 +69,8 @@ const ChatWindow = ({onClose}) => {
         <div className="chat-window">
             <div className="chat-window-head">
                 <img className={"image-frame"} src={CIS}/>
-                <p className={"title"}>CIS Chatbot</p>
-                <p className={"subtitle"}>Computing and Information Sciences AI Assistant</p>
+                <p className={"title"}>EduBot</p>
+                <p className={"subtitle"}>Educational AI Assistant</p>
                 <button className="close-button" onClick={onClose}>X</button>
             </div>
             <div ref={messageRef} className="chat-container">
@@ -96,7 +96,7 @@ const ChatWindow = ({onClose}) => {
                         }
                     }
                 />
-                {isLoading ? <BeatLoader color={'#4d79b6'}/> : <button onClick={() => {
+                {isLoading ? <BeatLoader color={'#872539'}/> : <button onClick={() => {
                     if (inputValue !== '') {
                         // @ts-ignore
                         sendQuery(inputValue)
