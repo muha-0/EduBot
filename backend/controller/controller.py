@@ -12,4 +12,8 @@ class Controller:
 
 
 if __name__ == "__main__":
+    import time
+
+    s = time.time()
     x = Controller()
+    print(time.time() - s)

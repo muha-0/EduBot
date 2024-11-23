@@ -1,3 +1,4 @@
+import time
 from multiprocessing import Process, Queue
 
 from fastapi import FastAPI
@@ -15,7 +16,9 @@ class MessageRequestModel(BaseModel):
 
 
 def generate(message, result_queue):
+    s = time.time()
     from backend.controller import Controller
+    print(time.time() - s)
 
     Controller.generate(message, result_queue)
 
