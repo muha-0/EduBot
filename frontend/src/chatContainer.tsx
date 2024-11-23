@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 // @ts-ignore
 import {BeatLoader} from 'react-spinners';
-import CIS from './assets/CIS.png';
+import umn from './assets/umn.png';
 import axios from "axios";
 import ChatMessage from "./message";
 
@@ -68,7 +68,7 @@ const ChatWindow = ({onClose}) => {
     return (
         <div className="chat-window">
             <div className="chat-window-head">
-                <img className={"image-frame"} src={CIS}/>
+                <img className={"image-frame"} src={umn}/>
                 <p className={"title"}>EduBot</p>
                 <p className={"subtitle"}>Educational AI Assistant</p>
                 <button className="close-button" onClick={onClose}>X</button>

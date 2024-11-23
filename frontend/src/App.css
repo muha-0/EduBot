@@ -77,7 +77,7 @@ a:visited {
     font-weight: bold; /* Emphasize header style */
     font-size: 1.3rem; /* Adjust font size for header */
     top: -10px;
-    left: 90px;
+    left: 120px;
     font-family: Poppins;
 }
 
@@ -86,7 +86,7 @@ a:visited {
     color: #fafafa; /* Lighter text color for Material Design */ /* Emphasize header style */
     font-size: 0.7rem; /* Adjust font size for header */
     top: 30px;
-    left: 100px;
+    left: 120px;
     font-family: Poppins;
 }
 
