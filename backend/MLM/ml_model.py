@@ -150,7 +150,7 @@ if __name__ == '__main__':
             '''
     cat = MlModel()
 
-    vals = [60, np.nan, 'Low', 'Yes', 7, 95, 'Low', 5, 'High', 'Private', 'Positive', 6, 'No', 'Near', np.nan]
+    vals = [30, 90, 'low', 'yes', 7, 95, 'low', 'high', 'public', 'positive', 6, 'no', 'far']
 
     cols = ['Hours_Studied',
             'Attendance',
@@ -159,14 +159,12 @@ if __name__ == '__main__':
             'Sleep_Hours',
             'Previous_Scores',
             'Motivation_Level',
-            'Tutoring_Sessions',
             'Teacher_Quality',
             'School_Type',
             'Peer_Influence',
             'Physical_Activity',
             'Learning_Disabilities',
-            'Distance_from_Home',
-            'Exam_Score'
+            'Distance_from_Home'
             ]
 
     vals = np.array(vals).reshape(1, -1)
