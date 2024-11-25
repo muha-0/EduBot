@@ -1,4 +1,5 @@
 import json
+import os
 import re
 
 from groq import Groq
@@ -25,7 +26,7 @@ class ChatModel:
         self.user = User()
         self.mlmodel = MlModel()
         self.client = Groq(
-            api_key="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",
+            api_key=os.environ['GROQ_API_KEY'],
         )
 
         # Make a flag that tells whether there was an initial prediction request that made us go to extraction or not.
