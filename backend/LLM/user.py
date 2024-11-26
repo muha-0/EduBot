@@ -73,6 +73,30 @@ class User:
                 elif attribute.__contains__("physical"):
                     self.physical_activity = value
 
+    def data(self):
+        return {
+            "user": {
+                "name": self.name,
+                "age": self.age,
+                "gender": self.gender
+            },
+            "academics": {
+                "study_hours_per_week": self.study_hours_per_week,
+                "sleep_hours_per_night": self.sleep_hours_per_night,
+                "previous_exam_scores": self.previous_exam_scores,
+                "motivation_level": self.motivation_level,
+                "class_attendance": self.class_attendance,
+                "teacher_quality": self.teacher_quality,
+                "resource_access": self.resource_access,
+                "extracurricular_activities": self.extracurricular_activities,
+                "school_type": self.school_type,
+                "peer_influence": self.peer_influence,
+                "learning_disabilities": self.learning_disabilities,
+                "distance_from_home": self.distance_from_home,
+                "physical_activity": self.physical_activity
+            }
+        }
+
 
 if __name__ == "__main__":
     u = User()

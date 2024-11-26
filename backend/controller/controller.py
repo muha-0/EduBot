@@ -32,6 +32,10 @@ class Controller:
         for chat_instance in Controller.__chat_instances:
             if chat_instance.user_id == user_id:
                 if chat_instance.history:
+                    user_data = chat_instance.user.data()
+                    Controller.__DB_client.add_user_and_academics(
+                        user_data['user'], user_data['academics']
+                    )
                     for message in chat_instance.history:
                         Controller.__DB_client.add_chat_history(
                             user_id, message["role"], message["content"]
