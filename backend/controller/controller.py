@@ -1,32 +1,28 @@
-import time
-
 from ..LLM import LLM
 from ..database import DBClient
 
 
 class Controller:
     __DB_client = DBClient()
-    _chat_instances = []
+    __chat_instances = []
 
     @staticmethod
     def generate(message, user_id):
         user_model = Controller.get_user_model(user_id)
-        # Controller.__DB_client.add_chat_history(user_id, "user", message)
-        s = time.time()
+        Controller.__DB_client.add_chat_history(user_id, "user", message)
         response = user_model.context_analysis(message)
-        print(time.time() - s)
-        # Controller.__DB_client.add_chat_history(user_id, "bot", response)
+        Controller.__DB_client.add_chat_history(user_id, "bot", response)
         return response
 
     @staticmethod
     def create_user_model(user_id):
         user_model = LLM(user_id)
-        Controller._chat_instances.append(user_model)
+        Controller.__chat_instances.append(user_model)
         return user_model
 
     @staticmethod
     def get_user_model(user_id):
-        for chat_instance in Controller._chat_instances:
+        for chat_instance in Controller.__chat_instances:
             if chat_instance.user_id == user_id:
                 return chat_instance
 
@@ -35,9 +31,9 @@ class Controller:
 
     @staticmethod
     def delete_user_model(user_id):
-        for chat_instance in Controller._chat_instances:
+        for chat_instance in Controller.__chat_instances:
             if chat_instance.user_id == user_id:
-                Controller._chat_instances.remove(chat_instance)
+                Controller.__chat_instances.remove(chat_instance)
                 del chat_instance
 
 
