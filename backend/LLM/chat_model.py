@@ -71,9 +71,9 @@ class ChatModel:
         response = response.rstrip(r'.|;|,').lower()
 
         # test
-        print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
-        print("LLM response to the analysis request:\n", response, "\n\n")
-        print(self.history, "\n\n")
+        # print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
+        # print("LLM response to the analysis request:\n", response, "\n\n")
+        # print(self.history, "\n\n")
 
         '''
         We want to check the response, 
@@ -112,8 +112,8 @@ class ChatModel:
             })
 
             # test
-            print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
-            print(self.history, "\n\n")
+            # print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
+            # print(self.history, "\n\n")
             return in_context_response
 
         # It is a prediction request
@@ -133,7 +133,7 @@ class ChatModel:
                 print("Execption while inputing extracted data during an extraction: ", e)
 
             # Test
-            print("User Current Attributes and values:\n", self.user.__dict__, "\n")
+            # print("User Current Attributes and values:\n", self.user.__dict__, "\n")
 
             # Check if the there was an initial prediction request to process
             if self.wanted_prediction == True:
@@ -160,9 +160,9 @@ class ChatModel:
                 })
 
                 # test
-                print("in-context response that we made an extraction with no prior prediction request:\n",
-                      in_context_response, "\n\n")
-                print(self.history, "\n\n")
+                # print("in-context response that we made an extraction with no prior prediction request:\n",
+                #       in_context_response, "\n\n")
+                # print(self.history, "\n\n")
                 return in_context_response
 
     def validate_and_output(self):
@@ -184,7 +184,7 @@ class ChatModel:
             # If the attribute is missing add it to the missing list
             if value == None or value == "" or value == []:
                 missing_attributes.append(attribute)
-            print(f"{attribute}: {value}\n", "\n\n")
+            # print(f"{attribute}: {value}\n", "\n\n")
 
         # We can manage things and make predictions if 0-2 attributes are missing
         # Tell the user we need more info if more than 2 attributes are missing
@@ -215,9 +215,9 @@ class ChatModel:
                 "content": in_context_response
             })
 
-            print("in-code prompt: \n", message, "\n\n")
-            print("in-context response for that we found missing values:\n", in_context_response, "\n\n")
-            print(self.history, "\n\n")
+            # print("in-code prompt: \n", message, "\n\n")
+            # print("in-context response for that we found missing values:\n", in_context_response, "\n\n")
+            # print(self.history, "\n\n")
             return in_context_response
 
         # Now we can provide a prediction
@@ -238,7 +238,7 @@ class ChatModel:
             "content": message
         })
 
-        print("chat history to announce with the prediction: \n", chat_history)
+        # print("chat history to announce with the prediction: \n", chat_history)
         chat_completion = self.client.chat.completions.create(
             messages=chat_history,
             model="llama-3.2-90b-vision-preview",
@@ -252,9 +252,9 @@ class ChatModel:
             "content": in_context_response
         })
 
-        print("in-code prompt: \n", message, "\n\n")
-        print("in-context response for announcing predictions:\n", in_context_response, "\n\n")
-        print(self.history)
+        # print("in-code prompt: \n", message, "\n\n")
+        # print("in-context response for announcing predictions:\n", in_context_response, "\n\n")
+        # print(self.history)
         return in_context_response
 
     # TODO: double check after fixing the ML model
@@ -404,7 +404,7 @@ class ChatModel:
         except Exception as e:
             print(f"Exception {e}")
 
-        print("Extracted Data:\n", extracted_data)
+        # print("Extracted Data:\n", extracted_data)
         return extracted_data
 
 

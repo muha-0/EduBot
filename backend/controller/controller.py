@@ -1,3 +1,5 @@
+import time
+
 from ..LLM import LLM
 from ..database import DBClient
 
@@ -10,7 +12,9 @@ class Controller:
     def generate(message, user_id):
         user_model = Controller.get_user_model(user_id)
         # Controller.__DB_client.add_chat_history(user_id, "user", message)
+        s = time.time()
         response = user_model.context_analysis(message)
+        print(time.time() - s)
         # Controller.__DB_client.add_chat_history(user_id, "bot", response)
         return response
 
