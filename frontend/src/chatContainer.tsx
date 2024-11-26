@@ -8,20 +8,11 @@ import ChatMessage from "./message";
 // @ts-ignore
 const ChatWindow = ({onClose}) => {
     const [inputValue, setInputValue] = useState('');
-    const [start, setStart] = useState(true)
     const [messages, setMessages] = useState([{
         message: "I'm The Educational AI Assistant.\nHow Can I help you? 😊",
         isAI: true
     }]);
     const [isLoading, setLoading] = useState(false);
-
-    if (start) {
-        if (sessionStorage.getItem("chat")) {
-            // @ts-ignore
-            setMessages(JSON.parse(sessionStorage.getItem("chat")))
-        }
-        setStart(false)
-    }
 
     async function sendQuery(query: string) {
         const data = {
