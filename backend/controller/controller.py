@@ -9,9 +9,7 @@ class Controller:
     @staticmethod
     def generate(message, user_id):
         user_model = Controller.get_user_model(user_id)
-        Controller.__DB_client.add_chat_history(user_id, "user", message)
         response = user_model.context_analysis(message)
-        Controller.__DB_client.add_chat_history(user_id, "bot", response)
         return response
 
     @staticmethod
@@ -33,6 +31,11 @@ class Controller:
     def delete_user_model(user_id):
         for chat_instance in Controller.__chat_instances:
             if chat_instance.user_id == user_id:
+                if chat_instance.history:
+                    for message in chat_instance.history:
+                        Controller.__DB_client.add_chat_history(
+                            user_id, message["role"], message["content"]
+                        )
                 Controller.__chat_instances.remove(chat_instance)
                 del chat_instance
 
