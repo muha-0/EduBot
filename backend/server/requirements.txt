@@ -1,0 +1,11 @@
+pymysql
+mysql-connector-python
+mysql
+pandas
+sqlalchemy
+groq
+numpy
+catboost
+imblearn
+python-dotenv
+fastapi

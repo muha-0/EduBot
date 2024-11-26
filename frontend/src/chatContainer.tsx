@@ -34,9 +34,13 @@ const ChatWindow = ({onClose}) => {
             setMessages([...messages, {message: query}]);
             setLoading(true)
 
-            const response = await axios.post(`http://localhost:2000/generate`, data);
-            // @ts-ignore
-            setMessages([...messages, {message: query}, {message: response.data, isAI: true}])
+            await axios.post(`http://localhost:2000/generate`, data)
+                .then(
+                    (response) => {
+                        // @ts-ignore
+                        setMessages([...messages, {message: query}, {message: response.data, isAI: true}])
+                    }
+                );
             // @ts-ignore
             setLoading(false)
 

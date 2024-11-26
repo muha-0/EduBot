@@ -26,6 +26,7 @@ class Controller:
             if chat_instance.user_id == user_id:
                 return chat_instance
 
+        print("User model not found, Creating new model")
         return Controller.create_user_model(user_id)
 
     @staticmethod
