@@ -9,7 +9,7 @@ from ..MLM import MlModel
 
 
 class ChatModel:
-    """**ChatModel Class Description:**  
+    """**ChatModel Class Description:**
     *This class does the main functionality of:*  
         1-Communication with the LLM.  
         2-Context Analysis.  
@@ -21,7 +21,8 @@ class ChatModel:
     It uses a user object to store the user's attributes and an MlModel object to get score predictions
     """
 
-    def __init__(self) -> None:
+    def __init__(self, user_id) -> None:
+        self.user_id = user_id
         self.history = []
         self.user = User()
         self.mlmodel = MlModel()
@@ -41,8 +42,6 @@ class ChatModel:
         If Recommendation, respond directly
         If Prediction, call for validation and then respond
         If Extraction, call for extraction and then check the state for the next step
-        
-        
         """
 
         # We will make the context analysis message stand alone for the LLM without giving giving him the chat history

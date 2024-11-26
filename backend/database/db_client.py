@@ -13,7 +13,7 @@ config = {
 
 
 class DBClient:
-    def __init__(self, config):
+    def __init__(self):
         """
         Initialize the DBController class with the given database configuration.
         """

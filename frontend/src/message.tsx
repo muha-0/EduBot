@@ -7,27 +7,32 @@ function parseTextForLinks(text: String) {
 
     let lastIndex = 0;
 
-    const matches = text.toString().matchAll(urlRegex)
-    for (const match of matches) {
-        const urlStart = match.index;
-        // @ts-ignore
-        const urlEnd = urlStart + match[0].length;
+    try {
+        const matches = text.toString().matchAll(urlRegex)
+        for (const match of matches) {
+            const urlStart = match.index;
+            // @ts-ignore
+            const urlEnd = urlStart + match[0].length;
 
-        // Add text segment before the URL
-        // @ts-ignore
-        if (urlStart > lastIndex) {
-            textSegments.push(text.slice(lastIndex, urlStart));
+            // Add text segment before the URL
+            // @ts-ignore
+            if (urlStart > lastIndex) {
+                textSegments.push(text.slice(lastIndex, urlStart));
+            }
+
+            // Add the URL as a link
+            textSegments.push(<a className={"link"} href={match[0]}>{match[0]}</a>);
+
+            lastIndex = urlEnd;
         }
 
-        // Add the URL as a link
-        textSegments.push(<a className={"link"} href={match[0]}>{match[0]}</a>);
+        // Add any remaining text after the last URL
+        if (lastIndex < text.length) {
+            textSegments.push(text.slice(lastIndex));
+        }
 
-        lastIndex = urlEnd;
-    }
-
-    // Add any remaining text after the last URL
-    if (lastIndex < text.length) {
-        textSegments.push(text.slice(lastIndex));
+    } catch (error) {
+        console.error('Error parsing text:', error);
     }
 
     return textSegments;

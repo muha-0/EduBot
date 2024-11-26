@@ -5,7 +5,6 @@ import umn from './assets/umn.png';
 import axios from "axios";
 import ChatMessage from "./message";
 
-
 // @ts-ignore
 const ChatWindow = ({onClose}) => {
     const [inputValue, setInputValue] = useState('');
@@ -27,6 +26,7 @@ const ChatWindow = ({onClose}) => {
     async function sendQuery(query: string) {
         const data = {
             message: query,
+            user_id: sessionStorage.getItem('sessionID')
         }
 
         try {

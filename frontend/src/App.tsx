@@ -4,11 +4,18 @@ import ChatWindow from "./chatContainer";
 import bot from './assets/bot.svg';
 import bg from './assets/bg.png'
 import Notification from './notify'
+import {v4 as uuidv4} from 'uuid';
 
 
 function App() {
     const [isOpen, setIsOpen] = useState(false);
     const [isNotified, setNotified] = useState(false)
+
+    let sessionId = sessionStorage.getItem('sessionID');
+    if (!sessionId) {
+        sessionId = uuidv4();
+        sessionStorage.setItem('sessionID', sessionId);
+    }
 
     return (
         <>

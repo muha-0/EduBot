@@ -1,13 +1,11 @@
-import time
-
 from dotenv import load_dotenv
 
 load_dotenv()
-from multiprocessing import Process, Queue
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+from backend.controller import Controller
 
 app = FastAPI()
 app.add_middleware(
@@ -17,25 +15,12 @@ app.add_middleware(
 
 class MessageRequestModel(BaseModel):
     message: str
-
-
-def generate(message, result_queue):
-    s = time.time()
-    from backend.controller import Controller
-    print(time.time() - s)
-
-    Controller.generate(message, result_queue)
+    user_id: str
 
 
 @app.post("/generate")
 def receive_data(payload: MessageRequestModel):
-    result_queue = Queue()
-
-    process = Process(target=generate, args=(payload.message, result_queue))
-    process.start()
-    process.join()
-
-    return result_queue.get()
+    return Controller.generate(payload.message, payload.user_id)
 
 
 if __name__ == "__main__":
