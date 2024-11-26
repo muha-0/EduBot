@@ -50,18 +50,19 @@ class DBClient:
             self.connection.close()
             print("Connection closed")
 
-    def add_user_and_academics(self, user, academics):
+    def add_user_and_academics(self, user_id, user, academics):
         """
         Add a user and their academics to the database.
         """
         cursor = self.connection.cursor()
         try:
+
             # Insert user
             cursor.execute("""
-                INSERT INTO User (name, age, gender) 
-                VALUES (%s, %s, %s)
-            """, (user.get('Name'), user.get('age'), user.get('gender')))
-            user_id = cursor.lastrowid
+                INSERT INTO User (user_id,name, age, gender) 
+                VALUES (%s, %s, %s, %s)
+            """, (user_id, user.get('Name'), user.get('age'), user.get('gender')))
+
 
             # Insert academics
             cursor.execute("""
