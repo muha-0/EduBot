@@ -54,7 +54,31 @@ class ChatModel:
 
         messege = f"""Given the following text, say "prediction" if the user wants to get a prediction, 
         say "extraction" if the user is providing information or a self report about themself, say "recommendation" for any other context: \n
-        \"{user_input}\""""
+        User input: \"{user_input}\"
+        
+        Follow these rules:
+        1-For prediction, be sure that the user actually wants you to predict something, grade, score, test, etc.
+        2-For extraction, the user should be providing some information about themselves, like their name, gender, age, academic information about them, etc.
+        3-For recommendation, the user should either want a recommendation from you to help them at something, or a general message which you can handle yourself with no need for extraction or making a prediction. 
+        
+        Check the following messages and the intent behind them as an example to what you should recognize as what where 'In' is the input message and 'Out' is the Intent recognized from the message:
+        
+        (1)
+        In: Hello, my name shady ali, I'm 24
+        Out: extraction
+        
+        (2)
+        In: What do you think my next score will be?
+        Out: prediction
+        
+        (3)
+        In: I am really at loss of what to do to improve my study habits and grades, what can I do?
+        Out: recommendation
+        
+        (4)
+        In: Hello
+        Out: recommendation
+        """
 
         chat_completion = self.client.chat.completions.create(
             messages=[
@@ -68,7 +92,7 @@ class ChatModel:
 
         # Get the LLM's response, he should answer with yes or no
         response = chat_completion.choices[0].message.content
-        response = response.rstrip(r'.|;|,').lower()
+        response = response.rstrip(r'.|;|:|,').lower()
 
         # test
         # print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
