@@ -16,6 +16,7 @@ class User:
         self.learning_disabilities = None
         self.distance_from_home = None
         self.physical_activity = None
+        self.tutoring = None
 
     def update(self, **kwargs):
         """Update the user's attributes
@@ -73,6 +74,8 @@ class User:
                 elif attribute.__contains__("physical"):
                     self.physical_activity = value
 
+
+    # TODO: Add tutoring attribute 
     def data(self):
         return {
             "user": {
@@ -96,6 +99,13 @@ class User:
                 "physical_activity": self.physical_activity
             }
         }
+        
+    def prediction_attributes(self):
+        return {'study_hours_per_week': self.study_hours_per_week,
+                'class_attendance': 100 - self.class_attendance,
+                'tutoring_sessions': self.tutoring,
+                'extracurricular_activities': self.extracurricular_activities,
+                'physical_activity': self.physical_activity}
 
 
 if __name__ == "__main__":

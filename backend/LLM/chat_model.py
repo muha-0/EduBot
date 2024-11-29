@@ -180,7 +180,7 @@ class ChatModel:
         # Let's check which attributes are still missing
         missing_attributes = []
 
-        for attribute, value in self.user.__dict__.items():  # or obj.__dict__.items()
+        for attribute, value in self.user.prediction_attributes().items():  # or obj.__dict__.items()
             # If the attribute is missing add it to the missing list
             if value == None or value == "" or value == []:
                 missing_attributes.append(attribute)
@@ -188,7 +188,7 @@ class ChatModel:
 
         # We can manage things and make predictions if 0-2 attributes are missing
         # Tell the user we need more info if more than 2 attributes are missing
-        if len(missing_attributes) > 4:
+        if len(missing_attributes) > 0:
             # Turn the wanted prediction flag to true
             # After validation, the user input should make an extraction request which when done,
             # we need to know whether if there was an initial prediction request that led us to this point or otherwise
@@ -221,14 +221,14 @@ class ChatModel:
             return in_context_response
 
         # Now we can provide a prediction
-        prediction = self.predict()  # To-do
+        prediction = self.mlmodel.predict(self.user.prediction_attributes())
 
         # Wrap up the prediction in a message
         message = f"""
         given the chat history so far and the user's following information along with this exam score prediction ({prediction}) for them: \n
         user's attributes: {self.user.__dict__} \n
         
-        can you announce to this user the prediction provided along with specific tips and recommendations to improve themselves more given their history and what you know so far?
+        can you announce the prediction to the user provided along with specific tips and recommendations to improve themselves more given their history and what you know so far?
         """
 
         # get a copy of the chat history because we don't want to append the in-code prompt to the actual user's chat history
@@ -257,7 +257,8 @@ class ChatModel:
         # print(self.history)
         return in_context_response
 
-    # TODO: double check after fixing the ML model
+
+    @DeprecationWarning()
     def predict(self):
         attributes = [
             self.user.study_hours_per_week,
@@ -304,12 +305,13 @@ class ChatModel:
             "class_attendance": 90,
             "teacher_quality": "high",
             "resource_access": "medium",
-            "extracurricular_activities": "yes",
+            "extracurricular_activities": 1,
             "school_type": "private",
             "peer_influence": "neutral",
             "learning_disabilities": "no",
             "distance_from_home": "far",
-            "physical_activity": "6"
+            "physical_activity": 1,
+            "tutoring": 1
         }
 
         # Few-Shot Prompt
@@ -338,21 +340,23 @@ class ChatModel:
                 
                 9. If values of "age" or "sleep_hours_per_night" are zero, leave the value as an empty string.
                 
-                10. Make sure to transform the values of "extracurricular_activities", "learning_disabilities" into (yes, no) categories.
+                10. Make sure to transform the values of "extracurricular_activities", "tutoring", "physical_activity", into (0, 1) categories such that 0 means 'no' and 1 means 'yes'.
                 
                 11. Make sure to transform the values of "school_type" into (private, public) categories.
                 
                 12. Make sure to transform the values of "peer_influence" into (positive, negative, neutral) categories.
                 
-                13. Make sure to transform the values of "physical_activity" into (0, 1, 2, 3, 4, 5, 6) categories.
+                13. Make sure to transform the values of "distance_from_home" into (near, moderate, far) categories.
                 
-                14. Make sure to transform the values of "distance_from_home" into (near, moderate, far) categories.
+                14. Make sure to stick to the given format and value categories.
                 
-                15. Make sure to stick to the given format and value categories.
+                15. Make sure to transform the values of "learning_disabilities" into (yes, no) Categories.
+                
+                
                 
                 Here are some examples, I'm gonna provide you the raw_texts and json structure.
                 raw_texts: 
-                1-Hey, I’m Shady, 21, male. I go to a private school and study about 20 hours a week. I usually get 6 hours of sleep a night, and my last exam score was 85. My motivation level is medium, and I attend 90% of my classes. Teachers are great, and resource access is decent. I’m involved in extracurricular activities and do about 6 hours of physical activity weekly. The school is far from home, but I manage. Peer influence is neutral, and thankfully, I don’t have any learning disabilities.
+                1-Hey, I’m Shady, 21, male. I go to a private school and study about 20 hours a week. I usually get 6 hours of sleep a night, and my last exam score was 85. My motivation level is medium, and I attend 90% of my classes. Teachers are great, and resource access is decent. I’m involved in extracurricular activities and do about 6 hours of physical activity weekly. The school is far from home, but I manage. Peer influence is neutral, and thankfully, I don’t have any learning disabilities. I take tutoring sessions yes.
                 2-Resources are decent—nothing fancy, but they work. I get about 6 hours of sleep most nights, which isn’t ideal but manageable. My last exam score was 85%.
                 3-Classes are alright! I attend regularly, maybe 85-90%. My study schedule’s flexible, but I squeeze in a few hours daily. Sleep’s hit-or-miss—usually 5-6 hours.
                 4-Hi, I’m Shady, a 21-year-old male. I study around 25 hours weekly, get 6 hours of sleep nightly, and scored 87 in my last exam. Motivation is at 8/10, with decent teacher support and 92% attendance.
