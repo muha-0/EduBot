@@ -282,7 +282,6 @@ class ChatModel:
         return in_context_response
 
 
-    @DeprecationWarning()
     def predict(self):
         attributes = [
             self.user.study_hours_per_week,

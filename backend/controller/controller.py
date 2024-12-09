@@ -43,6 +43,8 @@ class Controller:
                 Controller.__chat_instances.remove(chat_instance)
                 del chat_instance
 
+                break
+
 
 if __name__ == "__main__":
     x = Controller()

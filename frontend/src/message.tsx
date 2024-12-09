@@ -1,59 +1,19 @@
 import React from 'react';
+import {marked} from 'marked'; // Import marked library
 
 // @ts-ignore
-function parseTextForLinks(text: String) {
-    const urlRegex = /https?:\/\/[^\s]+/g; // Matches URLs with optional protocol
-    const textSegments = [];
-
-    let lastIndex = 0;
-
-    try {
-        const matches = text.toString().matchAll(urlRegex)
-        for (const match of matches) {
-            const urlStart = match.index;
-            // @ts-ignore
-            const urlEnd = urlStart + match[0].length;
-
-            // Add text segment before the URL
-            // @ts-ignore
-            if (urlStart > lastIndex) {
-                textSegments.push(text.slice(lastIndex, urlStart));
-            }
-
-            // Add the URL as a link
-            textSegments.push(<a className={"link"} href={match[0]}>{match[0]}</a>);
-
-            lastIndex = urlEnd;
-        }
-
-        // Add any remaining text after the last URL
-        if (lastIndex < text.length) {
-            textSegments.push(text.slice(lastIndex));
-        }
-
-    } catch (error) {
-        console.error('Error parsing text:', error);
-    }
-
-    return textSegments;
-}
-
-//@ts-ignore
-const TextWithLinks = ({text}) => {
-    const textSegments = parseTextForLinks(text);
+const MarkdownViewer = ({markdownText}) => {
+    const htmlContent = marked(markdownText);
 
     return (
-        <div>
-            {textSegments.map((segment) => (
-                typeof segment === 'string' ? (
-                    <span key={segment}>{segment.split('\n').map((item: any) => (<>{item}<br/></>))}</span>
-                ) : (
-                    segment
-                )
-            ))}
-        </div>
+        <div
+            className="markdown-content"
+            // @ts-ignore
+            dangerouslySetInnerHTML={{__html: htmlContent}} // Set the HTML content
+        />
     );
 };
+
 
 //@ts-ignore
 const ChatMessage = ({message, isAI = false}) => {
@@ -90,7 +50,7 @@ const ChatMessage = ({message, isAI = false}) => {
 
     return (
         <div style={messageStyles}>
-            {<TextWithLinks text={message}/>}
+            {<MarkdownViewer markdownText={message}/>}
         </div>
     );
 };
