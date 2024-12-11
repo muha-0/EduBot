@@ -54,6 +54,8 @@ class ChatModel:
                                 4- Eat That Frog!: 21 Great Ways to Stop Procrastinating and Get More Done in Less Time, by Brian Tracy.
                                 
                                 5- Huberman's Lab, a podcast by Andrew Huberman.
+                                
+                                You do not have to use these examples all the time or even mention all of them, but get an idea on what you might suggest from them or similar books you know of.
                             """
         chat_completion = self.client.chat.completions.create(
             messages=[

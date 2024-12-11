@@ -75,7 +75,7 @@ class User:
         
         if self.class_attendance != None:
             return {'study_hours_per_week': self.study_hours_per_week,
-                    'class_attendance': 100 - self.class_attendance,
+                    'class_attendance': ((100 - self.class_attendance)/100) * 32,
                     'tutoring_sessions': self.tutoring,
                     'extracurricular_activities': self.extracurricular_activities,
                     'physical_activity': self.physical_activity}
