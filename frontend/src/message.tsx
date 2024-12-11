@@ -19,7 +19,7 @@ const MarkdownViewer = ({markdownText}) => {
 const ChatMessage = ({message, isAI = false}) => {
     // Define base styles for both user and bot messages
     const baseStyles = {
-        padding: '20px',
+        padding: '12px',
         borderRadius: '30px',
         boxShadow: '0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)',
         display: 'flex',
@@ -50,7 +50,7 @@ const ChatMessage = ({message, isAI = false}) => {
 
     return (
         <div style={messageStyles}>
-            {<MarkdownViewer markdownText={message}/>}
+            {message && <MarkdownViewer markdownText={message}/>}
         </div>
     );
 };

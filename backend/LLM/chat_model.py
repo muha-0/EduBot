@@ -1,10 +1,9 @@
 import json
 import os
-import re
-from typing import List, Optional
+from typing import Optional
 
 from groq import Groq
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 
 from .user import User
 from ..MLM import MlModel
@@ -134,7 +133,7 @@ class ChatModel:
 
         # test
         # print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
-        # print("LLM response to the analysis request:\n", response, "\n\n")
+        print("First LLM response to the analysis request:\n", response, "\n\n")
         # print(self.history, "\n\n")
 
         '''
@@ -174,7 +173,7 @@ class ChatModel:
             })
 
             # test
-            # print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
+            print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
             # print(self.history, "\n\n")
             return in_context_response
 
@@ -222,8 +221,8 @@ class ChatModel:
                 })
 
                 # test
-                # print("in-context response that we made an extraction with no prior prediction request:\n",
-                #       in_context_response, "\n\n")
+                print("in-context response that we made an extraction with no prior prediction request:\n",
+                      in_context_response, "\n\n")
                 # print(self.history, "\n\n")
                 return in_context_response
 
