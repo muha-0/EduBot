@@ -24,24 +24,56 @@ class User:
             -If the value is an empty string, then the LLM did not extract any value for it and we want to keep it as None.
             -Else, we assign the extracted value to its attribute.
         """
-    
-        self.name = attributes.name
-        self.age = attributes.age
-        self.gender = attributes.gender
-        self.study_hours_per_week = attributes.study_hours_per_week
-        self.sleep_hours_per_night = attributes.sleep_hours_per_night
-        self.previous_exam_scores = attributes.previous_exam_scores
-        self.motivation_level = attributes.motivation_level
-        self.class_attendance = attributes.class_attendance
-        self.teacher_quality = attributes.teacher_quality
-        self.resource_access = attributes.resource_access
-        self.extracurricular_activities = attributes.extracurricular_activities
-        self.school_type = attributes.school_type
-        self.peer_influence = attributes.peer_influence
-        self.learning_disabilities = attributes.learning_disabilities
-        self.distance_from_home = attributes.distance_from_home
-        self.physical_activity = attributes.physical_activity
-        self.tutoring = attributes.tutoring
+        if attributes.name != None:
+            self.name = attributes.name
+            
+        if attributes.age != None:
+            self.age = attributes.age
+            
+        if attributes.gender != None:    
+            self.gender = attributes.gender
+        
+        if attributes.study_hours_per_week != None:
+            self.study_hours_per_week = attributes.study_hours_per_week
+        
+        if attributes.sleep_hours_per_night != None:
+            self.sleep_hours_per_night = attributes.sleep_hours_per_night
+        
+        if attributes.previous_exam_scores != None:
+            self.previous_exam_scores = attributes.previous_exam_scores
+        
+        if attributes.motivation_level != None:
+            self.motivation_level = attributes.motivation_level
+        
+        if attributes.class_attendance != None:
+            self.class_attendance = attributes.class_attendance
+        
+        if attributes.teacher_quality != None:
+            self.teacher_quality = attributes.teacher_quality
+        
+        if attributes.resource_access != None:
+            self.resource_access = attributes.resource_access
+        
+        if attributes.extracurricular_activities != None:
+            self.extracurricular_activities = attributes.extracurricular_activities
+        
+        if attributes.school_type != None:
+            self.school_type = attributes.school_type
+        
+        if attributes.peer_influence != None:
+            self.peer_influence = attributes.peer_influence
+        
+        if attributes.learning_disabilities != None:
+            self.learning_disabilities = attributes.learning_disabilities
+        
+        if attributes.distance_from_home != None:
+            self.distance_from_home = attributes.distance_from_home
+        
+        if attributes.physical_activity != None:
+            self.physical_activity = attributes.physical_activity
+        
+        if attributes.tutoring != None:
+            self.tutoring = attributes.tutoring
         
         print("\n\nupdated user attributes: ", self.data())
 
