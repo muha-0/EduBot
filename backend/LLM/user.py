@@ -72,11 +72,20 @@ class User:
         }
         
     def prediction_attributes(self):
-        return {'study_hours_per_week': self.study_hours_per_week,
-                'class_attendance': 100 - self.class_attendance,
-                'tutoring_sessions': self.tutoring,
-                'extracurricular_activities': self.extracurricular_activities,
-                'physical_activity': self.physical_activity}
+        
+        if self.class_attendance != None:
+            return {'study_hours_per_week': self.study_hours_per_week,
+                    'class_attendance': 100 - self.class_attendance,
+                    'tutoring_sessions': self.tutoring,
+                    'extracurricular_activities': self.extracurricular_activities,
+                    'physical_activity': self.physical_activity}
+            
+        else:
+            return {'study_hours_per_week': self.study_hours_per_week,
+                    'class_attendance': self.class_attendance,
+                    'tutoring_sessions': self.tutoring,
+                    'extracurricular_activities': self.extracurricular_activities,
+                    'physical_activity': self.physical_activity}
 
 
 if __name__ == "__main__":
