@@ -5,12 +5,15 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.controller import Controller
+try:
+    from backend.controller import Controller
+except:
+    pass
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"]
-)  # Allow CORS for all origins
+)
 
 
 class MessageRequestModel(BaseModel):
@@ -27,7 +30,6 @@ def receive_data(payload: MessageRequestModel):
 async def delete_user(payload: Request):
     body = await payload.json()
     Controller.delete_user_model(body["user_id"])
-
 
 if __name__ == "__main__":
     import uvicorn
