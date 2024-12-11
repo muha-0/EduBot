@@ -106,7 +106,13 @@ if __name__ == '__main__':
             '''
     model = MlModel()
 
-    vals = [[20, 10, 1, 1, 1]]
+    vals = {
+        "StudyTimeWeekly": 20,
+        "Absences": 7,
+        "Tutoring": 1,
+        "Extracurricular": 1,
+        "Sports": 1, 
+    }
 
 
 
