@@ -1,10 +1,9 @@
 import json
 import os
-import re
-from typing import List, Optional
+from typing import Optional
 
 from groq import Groq
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 
 from .user import User
 from ..MLM import MlModel
@@ -134,9 +133,9 @@ class ChatModel:
         response = response.rstrip(r'.|;|:|,').lower()
 
         # test
-        print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
-        print("LLM response to the analysis request:\n", response, "\n\n")
-        print(self.history, "\n\n")
+        # print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
+        # print("LLM response to the analysis request:\n", response, "\n\n")
+        # print(self.history, "\n\n")
 
         '''
         We want to check the response, 
@@ -175,8 +174,8 @@ class ChatModel:
             })
 
             # test
-            print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
-            print(self.history, "\n\n")
+            # print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
+            # print(self.history, "\n\n")
             return in_context_response
 
         # It is a prediction request
@@ -223,8 +222,8 @@ class ChatModel:
                 })
 
                 # test
-                print("in-context response that we made an extraction with no prior prediction request:\n",
-                      in_context_response, "\n\n")
+                # print("in-context response that we made an extraction with no prior prediction request:\n",
+                #       in_context_response, "\n\n")
                 # print(self.history, "\n\n")
                 return in_context_response
 
@@ -452,7 +451,7 @@ class ChatModel:
 
         try:
             extracted_data = self.user_attributes.model_validate_json(chat_completion.choices[0].message.content)
-            print(extracted_data, "\n\n")
+            # print(extracted_data, "\n\n")
         except Exception as e:
             print("Error while validating the JSON Output after an extraction attempt: ", e, "\n")
         return extracted_data
