@@ -29,7 +29,7 @@ def main():
     run_command("pip install -r requirements.txt", cwd=backend_path)
 
     print("Starting the Python API...")
-    subprocess.Popen("python api.py", cwd=backend_path, shell=True)
+    run_command(f'python "{backend_path}/api.py"', cwd=cwd)
 
     # Step 2: Navigate to frontend and execute commands
     frontend_path = os.path.join(cwd, "frontend")

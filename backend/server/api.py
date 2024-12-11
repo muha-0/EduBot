@@ -4,11 +4,7 @@ load_dotenv()
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
-try:
-    from backend.controller import Controller
-except:
-    pass
+from backend.controller import Controller
 
 app = FastAPI()
 app.add_middleware(
@@ -34,4 +30,5 @@ async def delete_user(payload: Request):
 if __name__ == "__main__":
     import uvicorn
 
+    print("ho")
     uvicorn.run("api:app", host="localhost", port=2000)
