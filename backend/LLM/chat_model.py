@@ -1,8 +1,10 @@
 import json
 import os
 import re
+from typing import List, Optional
 
 from groq import Groq
+from pydantic import BaseModel, ValidationError
 
 from .user import User
 from ..MLM import MlModel
@@ -33,6 +35,42 @@ class ChatModel:
         # Make a flag that tells whether there was an initial prediction request that made us go to extraction or not.
         # This flag should be used only when the user input is directed for extraction.
         self.wanted_prediction = False
+        
+        start_system_message = """
+                                You are the best model to assist students in improving their productivity, study habits, and helping them in their studies.
+                                you are the best at doing the following:
+                                1- Making recommendations: you provide effective suggestions and assistance in their studies and productivity and your suggestions with the information you know about them if provided.
+                                2- Sometimes you will be provided with an exam score prediction, you need to explain possible reasons behind such score given what you know about them and how they can improve or what to do next.
+                                
+                                when you are asked for recommendation, you must be specific for the studying or productivity techniques you might suggest them, citing where you know such techniques from if possible, and maybe suggesting that they check the source themselves.
+                                
+                                Here are some possible books, authors and people who provide advices on productivity and studying:
+                                
+                                1- Atomic Habits Book, by James Clear.
+                                
+                                2- The Slight Edge, by Jeff Olson.
+                                
+                                3- The 7 Habits of Highly Effective People, by Stephen Covey.
+                                
+                                4- Eat That Frog!: 21 Great Ways to Stop Procrastinating and Get More Done in Less Time, by Brian Tracy.
+                                
+                                5- Huberman's Lab, a podcast by Andrew Huberman.
+                            """
+        chat_completion = self.client.chat.completions.create(
+            messages=[
+                {
+                    "role": 'system',
+                    "content": start_system_message
+                }
+            ],
+            model="llama-3.3-70b-versatile",
+        )
+        
+
+        self.history.append({
+            "role": 'system',
+            "content": start_system_message
+        })
 
     def context_analysis(self, user_input):
         """Given user input, it decides the best course of action given the context and return the appropriate response
@@ -219,16 +257,16 @@ class ChatModel:
             self.wanted_prediction = True
 
             message = f"""
-            Can you write a message stating that you need them to provide following attributes to be able to make a prediction:
+            Can you write a message stating that you need them (the user) to provide following attributes to be able to make a prediction:
             {missing_attributes}
             """
             # Save the LLM's response to the actual user input while giving him context using chat history
             chat_completion = self.client.chat.completions.create(
                 messages=[{
-                    "role": "user",
+                    "role": "system",
                     "content": message
                 }],
-                model="llama-3.2-90b-vision-preview",
+                model="llama-3.3-70b-specdec",
             )
 
             in_context_response = chat_completion.choices[0].message.content
@@ -258,14 +296,14 @@ class ChatModel:
         # get a copy of the chat history because we don't want to append the in-code prompt to the actual user's chat history
         chat_history = self.history.copy()
         chat_history.append({
-            "role": "user",
+            "role": "system",
             "content": message
         })
 
         # print("chat history to announce with the prediction: \n", chat_history)
         chat_completion = self.client.chat.completions.create(
             messages=chat_history,
-            model="llama-3.2-90b-vision-preview",
+            model="llama-3.3-70b-specdec",
         )
 
         in_context_response = chat_completion.choices[0].message.content
@@ -308,6 +346,29 @@ class ChatModel:
         # If an error happened, return this message instead
         return 'could not predict exam score'
 
+
+
+
+# This is a class template for the JSON Object which we want to retrieve from the LLM in extract()
+    class user_attributes(BaseModel):
+        name: Optional[str]
+        age: Optional[int]
+        gender: Optional[str]
+        study_hours_per_week: Optional[int]
+        sleep_hours_per_night: Optional[int]
+        previous_exam_scores: Optional[int]
+        motivation_level: Optional[str]
+        class_attendance: Optional[int]
+        teacher_quality: Optional[str]
+        resource_access: Optional[str]
+        extracurricular_activities: Optional[int]
+        school_type: Optional[str]
+        peer_influence: Optional[str]
+        learning_disabilities: Optional[str]
+        distance_from_home: Optional[str]
+        physical_activity: Optional[int]
+        tutoring: Optional[int]
+
     def extract(self, user_input):
 
         """
@@ -316,40 +377,19 @@ class ChatModel:
         2-Has "few" examples and the output to learn from
         """
 
-        # JSON Structure the LLM will follow
-        json_structure = {
-            "name": "Shady",
-            "age": 21,
-            "gender": "male",
-            "study_hours_per_week": 20,
-            "sleep_hours_per_night": 6,
-            "previous_exam_scores": 85,
-            "motivation_level": "medium",
-            "class_attendance": 90,
-            "teacher_quality": "high",
-            "resource_access": "medium",
-            "extracurricular_activities": 1,
-            "school_type": "private",
-            "peer_influence": "neutral",
-            "learning_disabilities": "no",
-            "distance_from_home": "far",
-            "physical_activity": 1,
-            "tutoring": 1
-        }
-
         # Few-Shot Prompt
-        prompt = """
+        prompt = f"""
                 You are the best model to extract data from raw texts to desired Json format. you will be provided user messages that you need to extract specfic information from it into JSON format. 
                 You are tasked with converting the given text into a JSON object with the specified structure. 
                 Please follow these guidelines:
 
-                1. - If the provided text is empty or does not contain any relevant information, return the JSON structure with all values as an empty string.
+                1. - If the provided text is empty or does not contain any relevant information, return the JSON structure with all values as an None.
                 - If the provided text contains multiple instances of the same information (e.g., multiple names), use the one that relates to the user the most and not anyone else's.
                 - If the provided text contains conflicting information (e.g., different ages), use the one that relates to the user the most and not anyone else's.
 
                 2. Extract relevant information from the provided text and map it to the corresponding keys in the JSON structure.
 
-                3. If a particular key's value is not found in the given text, leave the value as an empty string.
+                3. If a particular key's value is not found in the given text, leave the value as an None.
 
                 4. Do not include any additional information or formatting beyond the requested JSON object.
                 
@@ -386,8 +426,8 @@ class ChatModel:
                 5-I’ve been trying to study consistently (about 3-4 hours a day), and motivation’s not bad! Teachers are okay, and I sleep about 6 hours. Last exam? 83%.
                 6-Hey, I’ve been studying around 20 hours weekly—pretty manageable. Ahmed says he studies way less, but his motivation is crazy high! My last exam score was 85%.
                 7-Classes are alright. I think Salma mentioned she’s getting better sleep—like 7 hours nightly. Me? Still around 6. Teachers are supportive, though!
-                json_structure: {json_structure}
-                """
+                json_structure:{json.dumps(self.user_attributes.model_json_schema(), indent=2)}""",
+            
 
         messages = [{
             "role": "system",
@@ -400,38 +440,21 @@ class ChatModel:
 
         chat_completion = self.client.chat.completions.create(
             messages=messages,
-            model="llama-3.2-90b-vision-preview",
+            model="llama-3.3-70b-versatile",
+            temperature=0,
+            # Streaming is not supported in JSON mode
+            stream=False,
+            # Enable JSON mode by setting the response format
+            response_format={"type": "json_object"},
         )
         extracted_data = chat_completion.choices[0].message.content
 
-        # Make the LLM validate its output and refine it
-        messages.append({
-            "role": "assistant",
-            "content": extracted_data
-        })
-        messages.append({
-            "role": "user",
-            "content": "Could you validate and refine your last answer by making it follow the exact JSON format provided and following the given rules? Output the final JSON only!"
-        })
-
-        chat_completion = self.client.chat.completions.create(
-            messages=messages,
-            model="llama-3.2-90b-vision-preview",
-        )
-        extracted_data = chat_completion.choices[0].message.content
 
         try:
-            # Try removing any text before and after the JSON structure then try formating it into an Object
-            pattern = r'(?s)\{.*\}'
-            extracted_data = re.search(pattern, extracted_data).group()
-
-            # Load into a JSON Object
-            extracted_data = json.loads(extracted_data)
-
+            self.user_attributes.model_validate_json(chat_completion.choices[0].message.content)
+            
         except Exception as e:
-            print(f"Exception {e}")
-
-        # print("Extracted Data:\n", extracted_data)
+            print("Error while validating the JSON Output after an extraction attempt: ", e, "\n")
         return extracted_data
 
 
