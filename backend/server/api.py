@@ -21,8 +21,8 @@ class MessageRequestModel(BaseModel):
 def receive_data(payload: MessageRequestModel):
     message = Controller.generate(payload.message, payload.user_id)
     print(f"response:  {message}")
-    # return message
-    return "How are you?"
+    return message
+    # return "How are you?"
 
 
 @app.post("/delete-user")
