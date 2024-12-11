@@ -1,9 +1,10 @@
 import json
 import os
-from typing import Optional
+import re
+from typing import List, Optional
 
 from groq import Groq
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 from .user import User
 from ..MLM import MlModel
@@ -89,14 +90,15 @@ class ChatModel:
             "content": user_input
         })
 
-        messege = f"""Given the following text, say "prediction" if the user wants to get a prediction, 
-        say "extraction" if the user is providing information or a self report about themself, say "recommendation" for any other context: \n
+        messege = f"""Given the following text, say prediction if the user wants to get a prediction, 
+        say extraction if the user is providing information or a self report about themself, say recommendation for any other context: \n
         User input: \"{user_input}\"
         
         Follow these rules:
         1-For prediction, be sure that the user actually wants you to predict something, grade, score, test, etc.
         2-For extraction, the user should be providing some information about themselves, like their name, gender, age, academic information about them, etc.
         3-For recommendation, the user should either want a recommendation from you to help them at something, or a general message which you can handle yourself with no need for extraction or making a prediction. 
+        4-you must only respond with 1 word of the three indicated above.
         
         Check the following messages and the intent behind them as an example to what you should recognize as what where 'In' is the input message and 'Out' is the Intent recognized from the message:
         
@@ -124,7 +126,7 @@ class ChatModel:
                     "content": messege
                 }
             ],
-            model="llama-3.2-90b-vision-preview",
+            model="llama-3.3-70b-versatile",
         )
 
         # Get the LLM's response, he should answer with yes or no
@@ -132,9 +134,9 @@ class ChatModel:
         response = response.rstrip(r'.|;|:|,').lower()
 
         # test
-        # print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
-        print("First LLM response to the analysis request:\n", response, "\n\n")
-        # print(self.history, "\n\n")
+        print("in-code prompt to analyze context and user's intent:\n", messege, "\n\n")
+        print("LLM response to the analysis request:\n", response, "\n\n")
+        print(self.history, "\n\n")
 
         '''
         We want to check the response, 
@@ -153,7 +155,7 @@ class ChatModel:
 
             # Update the extracted information into the user object's attributes
             try:
-                self.user.update(**user_info)
+                self.user.update(user_info)
 
             except Exception as e:
                 print("Execption while inputing extracted data during a recommendation: ", e)
@@ -174,7 +176,7 @@ class ChatModel:
 
             # test
             print("in-context response that we will make a recommendation:\n", in_context_response, "\n\n")
-            # print(self.history, "\n\n")
+            print(self.history, "\n\n")
             return in_context_response
 
         # It is a prediction request
@@ -188,7 +190,7 @@ class ChatModel:
 
             # Update the extracted information into the user object's attributes
             try:
-                self.user.update(**user_info)
+                self.user.update(user_info)
 
             except Exception as e:
                 print("Execption while inputing extracted data during an extraction: ", e)
@@ -209,7 +211,7 @@ class ChatModel:
                 # Save the LLM's response to the actual user input while giving him context using chat history
                 chat_completion = self.client.chat.completions.create(
                     messages=self.history,
-                    model="llama-3.2-90b-vision-preview",
+                    model="llama-3.3-70b-versatile",
                 )
 
                 in_context_response = chat_completion.choices[0].message.content
@@ -430,11 +432,11 @@ class ChatModel:
 
         messages = [{
             "role": "system",
-            "content": prompt
+            "content": str(prompt)
         },
             {
                 "role": "user",
-                "content": user_input
+                "content": str(user_input)
             }]
 
         chat_completion = self.client.chat.completions.create(
@@ -446,18 +448,17 @@ class ChatModel:
             # Enable JSON mode by setting the response format
             response_format={"type": "json_object"},
         )
-        extracted_data = chat_completion.choices[0].message.content
 
 
         try:
-            self.user_attributes.model_validate_json(chat_completion.choices[0].message.content)
-            
+            extracted_data = self.user_attributes.model_validate_json(chat_completion.choices[0].message.content)
+            print(extracted_data, "\n\n")
         except Exception as e:
             print("Error while validating the JSON Output after an extraction attempt: ", e, "\n")
         return extracted_data
 
 
 if __name__ == "__main__":
-    chatty = ChatModel()
+    chatty = ChatModel("787")
 
     chatty.context_analysis(input())
