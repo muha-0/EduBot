@@ -16,7 +16,7 @@ def run_command(command, cwd=None):
 
 def main():
     # Get the current working directory
-    cwd = os.getcwd()
+    cwd = os.path.dirname(os.path.abspath(__file__))
 
     # Step 1: Navigate to backend/server and execute commands
     backend_path = os.path.join(cwd, "backend", "server")
