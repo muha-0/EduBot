@@ -30,5 +30,4 @@ async def delete_user(payload: Request):
 if __name__ == "__main__":
     import uvicorn
 
-    print("ho")
     uvicorn.run("api:app", host="localhost", port=2000)
